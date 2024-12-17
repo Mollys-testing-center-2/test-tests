@@ -6,7 +6,6 @@ on:
     workflow_dispatch:
     merge_group:
         
-
 env:
     MCO_LOG_LEVEL: warn
     EXTERNAL_HOST: mcouniverse.com
@@ -32,4 +31,9 @@ jobs:
               run: |
                   pnpm install
                   make test
+            - name: Upload test results to Codecov
+              if: ${{ !cancelled() }}
+              uses: codecov/test-results-action@v1
+              with:
+                token: ${{ secrets.CODECOV_TOKEN }}
  
